@@ -132,9 +132,9 @@ public class DockerApi
 	 * Create a Docker Swarm Service.
 	 * 
 	 * @param info The Docker Swarm Service (see JavaDoc at com.gcu.edu.dockerapi.CreateSwarmServiceInfo).
-	 * @return True if the Service was created else returns false if Service was not created.
+	 * @return Service ID else returns null if Service was not created.
 	 */
-	public boolean createSwarmService(CreateSwarmServiceInfo info)
+	public String createSwarmService(CreateSwarmServiceInfo info)
 	{
 		// Create a Nginx in a Swarm
 		logger.debug("=======> Creating Service in a Swarm....");
@@ -176,44 +176,42 @@ public class DockerApi
 		
 		// Create a Service in the Swarm
 		CreateServiceResponse serviceReponse = dockerClient.createServiceCmd(spec).exec();
-		if(serviceReponse.getId() == null)
-			return false;
-		logger.debug("=======> Completed with an ID of " + serviceReponse.getId());
+		logger.debug("=======> Completed with a Service ID of " + serviceReponse.getId());
 		
-		// Return OK
-		return true;
+		// Return Service ID
+		return serviceReponse.getId();
 	}
 
 	/**
 	 * Create a Docker Container.
 	 * 
 	 * @param info The Docker Container (see JavaDoc at com.gcu.edu.dockerapi.CreateContainerInfo).
-	 * @return True if the Container was created else returns false if Container was not created.
+	 * @return Container ID else returns null if Container was not created.
 	 */
-	public boolean createContainer(CreateContainerInfo info)
+	public String createContainer(CreateContainerInfo info)
 	{
 		// Create a Container with desired Image, Name, and Port Spec
 		logger.debug("=======> Creating Container....");
 		try
 		{
 			CreateContainerResponse containerResponse = dockerClient.createContainerCmd(info.getImage()).withName(info.getName()).withPortSpecs(info.getPortSpec()).exec();
-			if(containerResponse.getId() == null)
-				return false;
-			logger.debug("=======> Completed with an ID of " + containerResponse.getId());
+			logger.debug("=======> Completed with a Container ID of " + containerResponse.getId());
 	
 			// Start the Container
 			logger.debug("=======> Starting Container....");
 			dockerClient.startContainerCmd(containerResponse.getId()).exec();
 			logger.debug("=======> Completed");
+			
+			// Return Container ID
+			return containerResponse.getId();
 		}
 		catch(NotFoundException e)
 		{
-			logger.debug("=======> Image not found");
-			return false;
+			logger.debug("=======> Container not found");
 		}
 		
-		// Return OK
-		return true;
+		// Return null for failure
+		return null;
 	}
 
 	/**

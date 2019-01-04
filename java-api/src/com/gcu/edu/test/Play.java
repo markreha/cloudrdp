@@ -203,9 +203,9 @@ public class Play
 	{
 		// Create a Nginx Service in a Swarm
 		CreateSwarmServiceInfo info = new CreateSwarmServiceInfo("nginx", "webapp1", .5f, 250, 1, 80, 1000);
-		boolean ok = api.createSwarmService(info);
-		if(ok)
-			System.out.println("=======> Nginx Swarm created successfully.");
+		String id = api.createSwarmService(info);
+		if(id != null)
+			System.out.println("=======> Nginx Swarm created successfully with an ID of " + id + ".");
 		else
 			System.out.println("=======> Nginx Swarm creation failed.");
 	}
@@ -218,9 +218,9 @@ public class Play
 	{
 		// Create a Tomcat Container
 		CreateContainerInfo info = new CreateContainerInfo("tomcat:8.5-alpine", "tomcat8.5", "8080:8080");
-		boolean ok = api.createContainer(info);
-		if(ok)
-			System.out.println("=======> Tomcat Container created successfully.");
+		String id = api.createContainer(info);
+		if(id != null)
+			System.out.println("=======> Tomcat Container created successfully with an ID of " + id + ".");
 		else
 			System.out.println("=======> Tomcat Container creation failed.");
 	}
