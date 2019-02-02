@@ -12,3 +12,5 @@ The Cloud Portal Application communicates to the Cloud via using a Java Docker A
 	<img src="../docs/images/java-api-doc.png" alt="Java Docker API UML Class Diagram"/>
 </p>
 
+The JavaDoc for the Java Docker API can be found [here](http://htmlpreview.github.com/?http://github.com/markreha/cloudrdp/blob/master/java-api/docs/javadoc/overview-summary.html)
+
