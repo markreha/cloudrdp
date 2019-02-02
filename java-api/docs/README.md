@@ -15,5 +15,5 @@ The Cloud Portal Application communicates to the Cloud via using a Java Docker A
 
 <a href="http://htmlpreview.github.com/?http://github.com/markreha/cloudrdp/blob/master/java-api/docs/javadoc/index.html" target='_parent'>Test</a>
 
-The JavaDoc for the Java Docker API can be found [here](http://htmlpreview.github.com/?http://github.com/markreha/cloudrdp/blob/master/java-api/docs/javadoc/index.html)
+The JavaDoc for the Java Docker API can be found [here](http://htmlpreview.github.com/?http://github.com/markreha/cloudrdp/blob/master/java-api/docs/javadoc/overview-summary.html)
 
