@@ -4,3 +4,5 @@
 Research Question: Can we design and build a fully functioning Private Cloud Platform using a cluster of Raspberry PI’s using current Cloud Technologies?
 
 This repository contains the JavaDoc to support the Cloud Java Docker API.
+
+[JavaDoc] (https://raw.githubusercontent.com/markreha/cloudrdp/master/java-api/docs/javadoc/index.html)
