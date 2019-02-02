@@ -5,5 +5,5 @@ Research Question: Can we design and build a fully functioning Private Cloud Pla
 
 This repository contains the JavaDoc to support the Cloud Java Docker API.
 
-[JavaDoc](https://raw.githubusercontent.com/markreha/cloudrdp/master/java-api/docs/javadoc/index.html)
+[JavaDoc](http://htmlpreview.github.com/?https://raw.githubusercontent.com/markreha/cloudrdp/master/java-api/docs/javadoc/index.html)
 
