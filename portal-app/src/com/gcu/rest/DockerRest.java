@@ -13,7 +13,6 @@ import com.gcu.service.ContainerServiceInterface;
 @RestController
 @RequestMapping("/service1")
 public class DockerRest {
-	@Autowired
 	ContainerServiceInterface service;
 
 	// Spring Rest service to return all valid containers in the database.
@@ -21,11 +20,15 @@ public class DockerRest {
 	public List<Container> getAllContainer() {
 		return service.viewContainer();
 	}
-	
+
 	// Spring Rest service to return all valid containers in the database.
 	// TODO: Pass in a model
 	@GetMapping("/container")
 	public Container getContainer() {
 		return service.findContainer(null);
+	}
+
+	public void setContainerService(ContainerServiceInterface service) {
+		this.service = service;
 	}
 }

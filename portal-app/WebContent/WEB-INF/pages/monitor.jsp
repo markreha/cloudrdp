@@ -1,12 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-</body>
-</html>
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">Monitor</h4>
+		<a href="CloudRDP/config/config/${cont.name}">Configure</a>
+		Image: ${cont.image[0]}
+		URL: http://example.com/ ${cont.name}
+		
+		Storage Space: ${code.setting.settings[0].limits.current} / ${code.storage}
+		CPU: ${code.settings[1].limits.current}
+		RAM: ${code.settings[2].limits.current}
+		Running: ${cont.code}
+	</div>
+</div>

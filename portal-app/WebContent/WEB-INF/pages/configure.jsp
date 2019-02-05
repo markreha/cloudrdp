@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-</body>
-</html>
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">Configure</h4>
+		CPU: ${code.setting.settings[0].limits.lower} - ${code.setting.settings[0].limits.current} - ${code.setting.settings[0].limits.upper}
+		RAM: ${code.setting.settings[0].limits.lower} - ${code.setting.settings[0].limits.current} - ${code.setting.settings[0].limits.upper}
+		Storage Space: ${code.setting.settings[0].limits.lower} - ${code.setting.settings[0].limits.current} - ${code.setting.settings[0].limits.upper}
+	</div>
+</div>

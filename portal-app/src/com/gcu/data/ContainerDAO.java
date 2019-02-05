@@ -2,9 +2,15 @@ package com.gcu.data;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.gcu.model.Container;
 
 public class ContainerDAO implements ContainerDAOInterface{
+	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplateObject;
 
 	@Override
 	public boolean createContainer(Container container) {
@@ -34,5 +40,10 @@ public class ContainerDAO implements ContainerDAOInterface{
 	public boolean deleteContainer(Container container) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 }

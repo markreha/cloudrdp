@@ -22,7 +22,7 @@ import com.gcu.model.User;
 import com.gcu.service.UserServiceInterface;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/user")
 public class UserController {
 	UserServiceInterface service;
 
@@ -45,7 +45,7 @@ public class UserController {
 	public ModelAndView login(@Valid @ModelAttribute("user") User user, BindingResult result,
 			HttpServletRequest request) {
 		if (result.hasErrors()) {
-			return new ModelAndView("loginUser", "user", user);
+			return new ModelAndView("login", "user", user);
 		}
 
 		// Add user to database and return userPage. Return error if already registered.
@@ -105,8 +105,7 @@ public class UserController {
 		request.getSession().invalidate();
 		return "redirect:/";
 	}
-
-	@Autowired
+	
 	public void setUserService(UserServiceInterface service) {
 		this.service = service;
 	}

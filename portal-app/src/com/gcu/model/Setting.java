@@ -2,34 +2,27 @@ package com.gcu.model;
 
 import java.util.HashMap;
 
+/**
+ * Stores the name and limit of each 
+ * @author Mark
+ *
+ */
 public class Setting {
-	private HashMap<String, Limit> settings;
+	private String name;
+	private Limit limits;
 
 	public Setting() {
-		settings = new HashMap<String, Limit>();
+		name = "";
+		limits = new Limit();
 	}
 
-	public Setting(String[] s, Limit[] l) {
-		settings = new HashMap<String, Limit>();
-
-		if (s.length != l.length) {
-			// TODO: Error, settings and limit amount do not match
-		}
-		for (int i = 0; i < s.length; i++) {
-			settings.put(s[i], l[i]);
-		}
+	public Setting(String name, Limit limit) {
+		this.name = name;
+		this.limits = limit;
 	}
 
-	public Setting(HashMap<String, Limit> settings) {
-		this.settings = settings;
+	public Setting(Setting copy) {
+		this.name = copy.name;
+		this.limits = copy.limits;
 	}
-
-	public HashMap<String, Limit> getSettings() {
-		return settings;
-	}
-
-	public void setSettings(HashMap<String, Limit> settings) {
-		this.settings = settings;
-	}
-
 }

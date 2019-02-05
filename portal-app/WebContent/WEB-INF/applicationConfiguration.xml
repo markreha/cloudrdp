@@ -18,7 +18,7 @@
 	<context:annotation-config />
 	
 	<mvc:annotation-driven />
-	<mvc:view-controller path="/" view-name="mainPage" />
+	<mvc:view-controller path="/" view-name="mainpage" />
 
 	<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
 
@@ -57,10 +57,18 @@
         </tx:attributes>
     </tx:advice>
     
-    <bean id="companyDAO" class="com.gcu.data.ContainerDAO">
+    <bean id="userController" class="com.gcu.controller.UserController">
+    </bean>
+    <bean id="containerController" class="com.gcu.controller.ContainerController">
+    </bean>
+    <bean id="userService" class="com.gcu.service.UserService">
+    </bean>
+    <bean id="containerService" class="com.gcu.service.ContainerService">
+    </bean>
+    <bean id="userDAO" class="com.gcu.data.UserDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<bean id="productDAO" class="com.gcu.data.UserDAO">
+	<bean id="containerDAO" class="com.gcu.data.ContainerDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 </beans>
