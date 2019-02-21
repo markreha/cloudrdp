@@ -42,7 +42,7 @@ public class UserDAO implements UserDAOInterface {
 		jdbcTemplateObject.update(sqlProfile);
 
 		// Insert User and get last inserted ID
-		sqlUser = "INSERT INTO FLIGHT_MANAGER.USERS(USERNAME, PASSWORD, USER_PROFILE_ID) VALUES(?,?,?)";
+		sqlUser = "INSERT INTO RDP_CLOUD.USERS(USERNAME, PASSWORD, USER_PROFILE_ID) VALUES(?,?,?)";
 
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {

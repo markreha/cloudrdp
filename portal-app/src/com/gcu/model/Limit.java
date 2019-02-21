@@ -25,6 +25,13 @@ public class Limit {
 		this.upper = upper;
 		this.setCurrent(this.preset);
 	}
+	
+	public Limit(float lower, float preset, float upper, float current) {
+		this.lower = lower;
+		this.preset = preset;
+		this.upper = upper;
+		this.current = current;
+	}
 
 	public float getLower() {
 		return lower;
