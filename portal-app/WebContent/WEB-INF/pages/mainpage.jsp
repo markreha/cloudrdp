@@ -8,7 +8,7 @@
 		<p>
 			<a class="btn btn-primary btn-lg" href="user/login" role="button">Log in »</a>
 			<a class="btn btn-primary btn-lg" href="user/register" role="button">Register »</a>
-			<a class="btn btn-primary btn-lg" href="container/viewall" role="button">View containers »</a>
+			<a class="btn btn-primary btn-lg" href="container/product" role="button">View containers »</a>
 		</p>
 	</div>
 	</c:if>
