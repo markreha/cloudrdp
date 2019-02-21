@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -17,14 +18,24 @@ import com.gcu.exception.BadLoginException;
 import com.gcu.model.User;
 
 public class UserDAO implements UserDAOInterface {
-	private DataSource dataSource;
+	
 	private JdbcTemplate jdbcTemplateObject;
+
+	@Autowired
+	public void setDataSource(DataSource dataSource) 
+	{
+		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+	}
 	
 	private User currentUser;
 	private long profileID;
 	private String sqlProfile;
 	private String sqlUser;
 	
+	/**
+	 * CREATE method
+	 * Create a new user in the database
+	 */
 	@Override
 	public boolean createUser(User user) {
 		currentUser = user;
@@ -57,15 +68,28 @@ public class UserDAO implements UserDAOInterface {
 		return true;
 	}
 
+	/**
+	 * READ method
+	 * Find if the user credentials return a registered user.
+	 * 
+	 * @param User user
+	 * @return boolean
+	 * @throws BadLoginException
+	 */
 	@Override
 	public boolean findUser(User user) {
 		String sql = "SELECT * FROM RDP_CLOUD.USER WHERE u_id = ? AND u_password = ?";
 
 		SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql, user.getUsername(), user.getPassword());
 		if (srs.next()) {
+			
+			// Whats the point of this
 			int id = srs.getInt("u_id");
+			id += id;
 			return true;
+			
 		} else {
+			// Buginess Logic should not be validated here
 			throw new BadLoginException();
 		}
 	}
@@ -80,10 +104,5 @@ public class UserDAO implements UserDAOInterface {
 	public boolean deleteUser(User user) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 }

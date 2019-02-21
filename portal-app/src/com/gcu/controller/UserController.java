@@ -1,13 +1,9 @@
 package com.gcu.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gcu.exception.AlreadyRegisteredException;
 import com.gcu.exception.BadLoginException;
-import com.gcu.model.Container;
 import com.gcu.model.ErrorMessage;
 import com.gcu.model.User;
 import com.gcu.service.UserServiceInterface;
@@ -95,7 +90,8 @@ public class UserController {
 			ErrorMessage error = new ErrorMessage("Registration failed", message, "register");
 			return new ModelAndView("error", "error", error);
 		}
-		List<Container> projects = new ArrayList<Container>();
+		
+//		List<Container> projects = new ArrayList<Container>();
 
 		return new ModelAndView("userPage", "user", user);
 	}

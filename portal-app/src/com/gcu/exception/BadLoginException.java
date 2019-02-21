@@ -2,6 +2,11 @@ package com.gcu.exception;
 
 public class BadLoginException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public BadLoginException() {
 		// TODO Auto-generated constructor stub
 	}
