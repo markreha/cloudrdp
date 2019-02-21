@@ -1,0 +1,8 @@
+.project
+java-api/.classpath
+java-api/.project
+java-api/.settings/*
+java-api/target/*
+portal-app/.classpath
+portal-app/.settings/*
+portal-app/target/*
