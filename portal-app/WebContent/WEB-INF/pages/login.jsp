@@ -4,7 +4,7 @@
 	<div class="card-body">
 		<h4 class="card-title">User login</h4>
 		
-		<form:form method = "POST" action="loginUser" modelAttribute="user">
+		<form:form method="POST" action="loginUser" modelAttribute="user">
 			<div class="form-group">
 				<form:label path="username">Username</form:label>
 				<form:input path="username" class="form-control" />
@@ -22,4 +22,4 @@
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form:form>
 	</div>
-</div><%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+</div>

@@ -43,8 +43,4 @@ public class ContainerController
 		System.out.println(obj.get("name"));
 		return new ModelAndView("monitor", "cont", obj);
 	}
-
-	public void setContainerService(ContainerServiceInterface service) {
-		this.service = service;
-	}
 }

@@ -55,8 +55,4 @@ public class ConfigController
 		System.out.println(obj);
 		return new ModelAndView("monitor", "cont", obj);
 	}
-
-	public void setContainerService(ContainerServiceInterface service) {
-		this.service = service;
-	}
 }
