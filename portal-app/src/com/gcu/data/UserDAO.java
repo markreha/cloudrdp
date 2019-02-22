@@ -38,22 +38,26 @@ public class UserDAO implements UserDAOInterface {
 	 */
 	@Override
 	public boolean createUser(User user) {
+		
 		currentUser = user;
 		// Find if user exists
-		String uniqueSql = "SELECT COUNT(*) FROM RDP_CLOUD.USER WHERE u_username = ?";
+		String uniqueSql = "SELECT COUNT(*) FROM `user` WHERE `u_username` = ?";
 		int uniqueRowsCount = jdbcTemplateObject.queryForObject(uniqueSql, new Object[] { user.getUsername() },
 				Integer.class);
+		
 		if (uniqueRowsCount > 0) {
 			throw new AlreadyRegisteredException();
 		}
-		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
+//		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
 		// Insert User Profile and get last inserted ID
-		sqlProfile = String.format("INSERT INTO RDP_CLOUD.USER(FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, DATE_OF_BIRTH, ADDRESS) VALUES(%s,%s,%s,%s,%s,%s)");
+		sqlProfile = String.format("INSERT INTO `user` (FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, DATE_OF_BIRTH, ADDRESS) VALUES(%s,%s,%s,%s,%s,%s)");
 
 		jdbcTemplateObject.update(sqlProfile);
 
 		// Insert User and get last inserted ID
-		sqlUser = "INSERT INTO RDP_CLOUD.USERS(USERNAME, PASSWORD, USER_PROFILE_ID) VALUES(?,?,?)";
+		sqlUser = "INSERT INTO `user` (`USERNAME`, `PASSWORD`, `USER_PROFILE_ID`) VALUES(?,?,?)";
 
 		jdbcTemplateObject.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -63,7 +67,7 @@ public class UserDAO implements UserDAOInterface {
 				ps.setInt(3, (int)profileID);
 				return ps;
 			}
-		}, keyHolder);
+		}, new GeneratedKeyHolder());
 
 		return true;
 	}
@@ -76,20 +80,62 @@ public class UserDAO implements UserDAOInterface {
 	 * @return boolean
 	 * @throws BadLoginException
 	 */
+//	@Override
+//	public boolean findUser(User user) {
+//		String sql = "SELECT * FROM `user` WHERE `username` = ? AND `password` = ?";
+//
+//		SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql, user.getUsername(), user.getPassword());
+//		if (srs.next()) {
+//			
+//			// Whats the point of this
+//			int id = srs.getInt("u_id");
+//			id += id;
+//			return true;
+//			
+//		} else {
+//			// Business Logic should not be validated here
+//			throw new BadLoginException();
+//		}
+//	}
+	
+	/**
+	 * READ Method
+	 * Validation Login query checks if username exists in the database, case sensitive.
+	 * 
+	 * @param User user
+	 * @return User user || null
+	 * @throws DatabaseException
+	 */
 	@Override
-	public boolean findUser(User user) {
-		String sql = "SELECT * FROM RDP_CLOUD.USER WHERE u_id = ? AND u_password = ?";
-
-		SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql, user.getUsername(), user.getPassword());
-		if (srs.next()) {
+	public boolean findUser(User user)
+	{
+		try
+		{
+			// READ query to identify the user by username and password.
+			String sql = "SELECT * FROM `user` WHERE "
+					+ "USERNAME = '"+user.getUsername()+"' "
+					+ "AND PASSWORD = '"+user.getPassword()+"'";
+			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql);
 			
-			// Whats the point of this
-			int id = srs.getInt("u_id");
-			id += id;
+			// Goes to the Last Row of the Results
+			srs.beforeFirst();
+			srs.last();
+			
+			// Checks the Size of the Results. If anything other than 1, return null
+			if(srs.getRow() != 1)
+			{
+				return false;
+			}
+			
+			// Last Row should still be the First, and return the user
+//			return User.getSqlRowSet(srs);
 			return true;
-			
-		} else {
-			// Buginess Logic should not be validated here
+		}
+		// Catches SQL / DB Connection Issues.
+		catch(Exception e)
+		{
+			// Throw Custom DB Exception
+//			throw new DatabaseException(e);
 			throw new BadLoginException();
 		}
 	}

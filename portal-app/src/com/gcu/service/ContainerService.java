@@ -2,11 +2,15 @@ package com.gcu.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.gcu.data.ContainerDAOInterface;
 import com.gcu.model.Container;
 
-public class ContainerService implements ContainerServiceInterface {
-	ContainerDAOInterface data;
+public class ContainerService implements ContainerServiceInterface 
+{
+	@Autowired
+	private ContainerDAOInterface data;
 
 	@Override
 	public boolean createContainer(Container container) {

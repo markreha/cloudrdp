@@ -6,7 +6,9 @@ import com.gcu.data.UserDAOInterface;
 import com.gcu.model.User;
 
 public class UserService implements UserServiceInterface {
-	UserDAOInterface dao;
+	
+	@Autowired
+	private UserDAOInterface dao;
 	
 	@Override
 	public boolean createUser(User user) {
@@ -26,10 +28,5 @@ public class UserService implements UserServiceInterface {
 	@Override
 	public boolean deleteUser(User user) {
 		return dao.deleteUser(user);
-	}
-
-	@Autowired
-	public void setUserService(UserDAOInterface dao) {
-		this.dao = dao;
 	}
 }

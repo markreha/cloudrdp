@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,8 +19,11 @@ import com.gcu.service.ContainerServiceInterface;
 
 @Controller
 @RequestMapping("/config")
-public class ConfigController {
-	ContainerServiceInterface service;
+public class ConfigController 
+{
+	@SuppressWarnings("unused")
+	@Autowired
+	private ContainerServiceInterface service;
 
 	@RequestMapping(path = "/config/{id}", method = RequestMethod.GET)
 	public ModelAndView configure(HttpServletRequest request) {

@@ -14,15 +14,15 @@
     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
 	<context:component-scan base-package="com.gcu" />
 	<context:annotation-config />
 	
 	<mvc:annotation-driven />
 	<mvc:view-controller path="/" view-name="mainpage" />
-
 	<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
 
-<!-- Tiles View Resolver -->
+	<!-- Tiles View Resolver -->
   	<bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
  	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
@@ -33,12 +33,17 @@
 		</property>
 	</bean>
 
-    <!-- MySQL Datasource, update from Azure credentials -->
+	<!-- Configuration Parameters -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="location" value="classpath:config.properties" />
+    </bean>
+    
+    <!-- MySQL Config.Properties Datasource -->
     <bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://127.0.0.1:55737/localdb" />
-        <property name="username" value="azure" />
-        <property name="password" value="6#vWHD_$" />
+    	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="${db.connection}" />
+    	<property name="username" value="${db.username}" />
+    	<property name="password" value="${db.password}" />
     </bean>
 
     <!-- Setup Transaction Manager -->
@@ -57,17 +62,27 @@
         </tx:attributes>
     </tx:advice>
     
+    <!-- Bean Management -->
+    
+    <!-- Controllers -->
     <bean id="userController" class="com.gcu.controller.UserController">
     </bean>
+    
     <bean id="containerController" class="com.gcu.controller.ContainerController">
     </bean>
+    
+    <!-- Business Services -->
     <bean id="userService" class="com.gcu.service.UserService">
     </bean>
+    
     <bean id="containerService" class="com.gcu.service.ContainerService">
     </bean>
+    
+    <!-- Data Services -->
     <bean id="userDAO" class="com.gcu.data.UserDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
 	<bean id="containerDAO" class="com.gcu.data.ContainerDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>

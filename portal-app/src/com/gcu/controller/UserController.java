@@ -3,7 +3,9 @@ package com.gcu.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,10 @@ import com.gcu.service.UserServiceInterface;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
-	UserServiceInterface service;
+public class UserController 
+{
+	@Autowired
+	private UserServiceInterface service;
 
 	/**
 	 * @return A form to create a User
@@ -97,7 +101,8 @@ public class UserController {
 	}
 
 	@RequestMapping(path = "/logout", method = RequestMethod.GET)
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletRequest request, ModelMap model) 
+	{
 		request.getSession().invalidate();
 		return "redirect:/";
 	}
