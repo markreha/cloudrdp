@@ -4,7 +4,7 @@
 	<div class="card-body">
 		<h4 class="card-title">User login</h4>
 		
-		<form:form method="POST" action="loginUser" modelAttribute="user">
+		<form:form method="POST" action="${pageContext.request.contextPath}/user/loginUser" modelAttribute="user">
 			<div class="form-group">
 				<form:label path="username">Username</form:label>
 				<form:input path="username" class="form-control" />

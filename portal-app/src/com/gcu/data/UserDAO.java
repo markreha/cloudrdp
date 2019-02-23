@@ -88,7 +88,8 @@ public class UserDAO implements UserDAOInterface {
 		{
 			// READ query to identify the user by username and password.
 			String sql = "SELECT * FROM `user` WHERE "
-					+"USERNAME = '"+user.getUsername()+"' AND PASSWORD = '"+user.getPassword()+"'";
+					+" BINARY `USERNAME` = '"+user.getUsername()+"'"
+							+ " AND BINARY `PASSWORD` = '"+user.getPassword()+"'";
 			
 			// Execute query and get result set
 			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(sql);
@@ -96,7 +97,7 @@ public class UserDAO implements UserDAOInterface {
 			// Goes to the Last Row of the Results
 			srs.last();
 			
-			// Checks the Size of the Results. If anything other than 1, return null
+			// if the Last Row is not the only index, user is not unique or exists
 			if(srs.getRow() != 1)
 			{
 				return null;

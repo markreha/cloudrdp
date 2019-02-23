@@ -50,7 +50,7 @@ public class UserController
 	 */
 //	@PostMapping("/loginUser")
 	@RequestMapping(path = "/loginUser", method = RequestMethod.POST)
-	public ModelAndView login(@Valid @ModelAttribute("user") User user, 
+	public ModelAndView loginUser(@Valid @ModelAttribute("user") User user, 
 			BindingResult result, HttpServletRequest request) 
 	{
 		try 
@@ -97,7 +97,7 @@ public class UserController
 	 * @return ModelAndView userPage
 	 */
 	@PostMapping("/registerUser")
-	public ModelAndView addUser(@Valid @ModelAttribute("userProfile") User user, 
+	public ModelAndView registerUser(@Valid @ModelAttribute("userProfile") User user, 
 			BindingResult result, HttpServletRequest request) 
 	{
 		try 
