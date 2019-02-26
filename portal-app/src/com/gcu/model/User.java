@@ -1,5 +1,9 @@
 package com.gcu.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class User 
@@ -58,6 +62,14 @@ public class User
 	{
 		return  "'" + user.getUsername() + "', " +
 				"'" + user.getPassword();
+	}
+	
+	public static PreparedStatement prepareStatement(Connection connection, String query, User user) throws SQLException
+	{	
+		PreparedStatement ps = connection.prepareStatement(query, new String[] { "ID" } );
+		ps.setString(1, user.getUsername());
+		ps.setString(2, user.getPassword());
+		return ps;
 	}
 	
 }

@@ -1,12 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-</body>
-</html>
+
+<form:form class="form" modelAttribute="user" action="${pageContext.request.contextPath}/user/registerUser" method="POST">
+  <h2 class="mgn-10">Register</h2>
+  
+  <div class="column">
+  	<form:errors class="form-error" path="username"/>
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Username:</div>
+    <form:input path="username" minlength="5" placeholder="username" class="input" required="true" type="text" value="" maxlength="20" />
+   </div>
+  </div>
+  
+  <div class="column">
+   <form:errors class="form-error" path="password"/>
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Password:</div>
+    <form:input path="password" minlength="5" placeholder="password" type="password" class="input" required="true" value="" maxlength="20" />
+   </div>
+  </div>
+  
+  <input class="btn-green font-bold mgn-col-10" type="submit" value="Sign Up" />
+  
+</form:form>
+
+<div style="color: red"></div>
+<div style="color: green"></div>

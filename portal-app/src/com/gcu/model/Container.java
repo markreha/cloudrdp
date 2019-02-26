@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Container {
-	private int id;
+	private int id;	
 	private String name;
 	// List of products used. Tomcat, SQL database, ect.
 	private List<String> image;

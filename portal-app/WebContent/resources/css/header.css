@@ -1,0 +1,122 @@
+@charset "ISO-8859-1";
+
+.topnav {
+  overflow: hidden;
+  /* background-color: #333; */
+  background: white;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+ /*  color: white; */
+  color: #333;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.active {
+/*   background-color: #4CAF50;
+ */  background-color: #58b55b;
+  color: white;
+}
+
+.topnav .topnav-icon {
+  display: none;
+  z-index: 5;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 17px;    
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 6;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  box-shadow: 0px 1px 0px 1px rgba(0,0,0,0.1); 
+}
+
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color: #ccc;
+  color: white;
+}
+
+.topnav .active:hover {
+  background-color: #4f74af;
+}
+
+.topnav .topnav-right {
+	float: right;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+@media all and (max-width: 600px) {
+	
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+    display: none;
+  }
+  .topnav a.topnav-icon {
+    float: right;
+    display: block;
+  }
+  
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .topnav-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .topnav.responsive .dropdown {float: none;}
+  .topnav.responsive .dropdown-content {position: relative;}
+  .topnav.responsive .dropdown .dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  
+  
+.topnav .topnav-right  {
+	float: unset;
+	}
+
+}

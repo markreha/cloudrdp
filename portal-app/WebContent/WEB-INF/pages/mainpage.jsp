@@ -15,7 +15,7 @@
 	
 	<c:if test="${not empty token}">
 	<div class="container">
-		<h1 class="display-4">Welcome, ${token.user.username}!</h1>
+		<h1 class="display-4">Welcome, ${token.username}!</h1>
 		<p>Make your own cloud application</p>
 		<p>
 			<a class="btn btn-primary btn-lg" href="product/flights" role="button">View flights »</a>

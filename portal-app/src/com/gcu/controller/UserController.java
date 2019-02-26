@@ -48,8 +48,7 @@ public class UserController
 	 * @HttpServletRequest - session (can be substituted for ModelMap)
 	 * @return ModelAndView productCat
 	 */
-//	@PostMapping("/loginUser")
-	@RequestMapping(path = "/loginUser", method = RequestMethod.POST)
+	@PostMapping("/loginUser")
 	public ModelAndView loginUser(@Valid @ModelAttribute("user") User user, 
 			BindingResult result, HttpServletRequest request) 
 	{
@@ -97,7 +96,7 @@ public class UserController
 	 * @return ModelAndView userPage
 	 */
 	@PostMapping("/registerUser")
-	public ModelAndView registerUser(@Valid @ModelAttribute("userProfile") User user, 
+	public ModelAndView registerUser(@Valid @ModelAttribute("user") User user, 
 			BindingResult result, HttpServletRequest request) 
 	{
 		try 
@@ -105,13 +104,14 @@ public class UserController
 			// Validate the form. Return to the Register page if form is invalid
 			if (result.hasErrors()) 
 			{
-				return new ModelAndView("registerUser", "userProfile", user);
+				return new ModelAndView("registerUser", "user", user);
 			}
 			// Call the User Service to create the user
 			userService.createUser(user);
-			
-			// Nav the user ot the userpage
-			return new ModelAndView("userPage", "user", user);
+			// Save the user in the session
+			request.getSession().setAttribute("token", user);
+			// Navigate user to the productCat
+			return new ModelAndView("productCat", "user", user);
 		} 
 		// Catches the UserFoundException for invalid request
 		catch (UserFoundException e) 
