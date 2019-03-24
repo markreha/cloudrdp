@@ -4,14 +4,13 @@ import java.util.List;
 
 import com.gcu.model.Container;
 
-public interface ContainerDAOInterface {
-	public boolean createContainer(Container container);
-
-	public Container findContainer(Container container);
+public interface ContainerDAOInterface
+{
+	public List<Container> findAllByUsername(final String username);
 	
-	public List<Container> viewContainer();
-
-	public boolean updateContainer(Container container);
-
-	public boolean deleteContainer(Container container);
+	public boolean findIfExists(Container container);
+	
+	public boolean create(Container container);
+	
+	public boolean delete(Container container);
 }

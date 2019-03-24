@@ -68,6 +68,9 @@
     <bean id="userController" class="com.gcu.controller.UserController">
     </bean>
     
+    <bean id="imageController" class="com.gcu.controller.ImageController">
+    </bean>
+    
     <bean id="containerController" class="com.gcu.controller.ContainerController">
     </bean>
     
@@ -75,11 +78,18 @@
     <bean id="userService" class="com.gcu.service.UserService">
     </bean>
     
+    <bean id="imageService" class="com.gcu.service.ImageService">
+    </bean>
+    
     <bean id="containerService" class="com.gcu.service.ContainerService">
     </bean>
     
     <!-- Data Services -->
     <bean id="userDAO" class="com.gcu.data.UserDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="imageDAO" class="com.gcu.data.ImageDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	

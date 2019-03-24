@@ -12,9 +12,9 @@
  /*  color: white; */
   color: #333;
   text-align: center;
-  padding: 14px 16px;
+  padding: 10px 14px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 1em;
 }
 
 .active {
@@ -37,8 +37,8 @@
   font-size: 17px;    
   border: none;
   outline: none;
-  color: white;
-  padding: 14px 16px;
+  color: #333;
+  padding: 10px 14px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
@@ -55,8 +55,8 @@
 
 .dropdown-content a {
   float: none;
-  color: black;
-  padding: 12px 16px;
+  color: inherit;
+  padding: 10px 14px;
   text-decoration: none;
   display: block;
   text-align: left;
@@ -64,7 +64,8 @@
 }
 
 .topnav a:hover, .dropdown:hover .dropbtn {
-  background-color: #ccc;
+  /* background-color: #ccc; */
+  background: rgb(117, 79, 173);	
   color: white;
 }
 
@@ -77,7 +78,8 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+ /*  background-color: #ddd; */
+  background: rgb(117, 79, 173, 0.5);
   color: white;
 }
 
@@ -93,6 +95,7 @@
   .topnav a.topnav-icon {
     float: right;
     display: block;
+    line-height: 100%;
   }
   
   .topnav.responsive {position: relative;}
@@ -100,6 +103,7 @@
     position: absolute;
     right: 0;
     top: 0;
+    line-height: 100%;
   }
   .topnav.responsive a {
     float: none;

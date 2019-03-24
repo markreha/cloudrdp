@@ -20,7 +20,7 @@
    </div>
   </div>
   
-  <input class="btn-green font-bold mgn-col-10" type="submit" value="Sign Up" />
+  <input class="btn-purple font-bold mgn-col-10" type="submit" value="Sign Up" />
   
 </form:form>
 

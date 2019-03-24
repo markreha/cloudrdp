@@ -25,6 +25,7 @@ input {
   outline: none;
   background: unset;
   width: 100%;
+  color: #333;
 }
 
 /* Change the white to any color */
@@ -64,7 +65,7 @@ input:-webkit-autofill:active  {
 .container {
 	display: grid;
   		
-  	grid-template-rows: [one] 48px [two] auto [three] /* 100% [four] */;
+  	grid-template-rows: [one] 40px [two] auto [three] /* 100% [four] */;
   	grid-template-areas:
   		"header"
   		"body"

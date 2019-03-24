@@ -1,113 +1,181 @@
 package com.gcu.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class Container {
-	private int id;	
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+public class Container extends Image
+{
+	@NotNull
+	@Size(min=0, max=32)
 	private String name;
-	// List of products used. Tomcat, SQL database, ect.
-	private List<String> image;
-	private List<Setting> settings;
-	private float storage;
-	// Running or not. False by default
-	private boolean code;
-
-	public Container() {
-		id = 0;
-		name = "Empty";
-		image = new ArrayList<String>();
-		image.add("none");
-		settings = new ArrayList<Setting>();
-		settings.add(new Setting());
-		settings.add(new Setting());
-		settings.add(new Setting());
-		storage = 0;
-		code = false;
-	}
-
-	public Container(int id, String name, List<String> image, List<Setting> setting, float storage, boolean code) {
-		this.id = id;
+	
+	@NotNull
+	@Size(min=0, max=200)
+	private String description;
+	
+	@NotNull
+	@Size(min=0, max=32)
+	private String dockerId;
+	
+	@NotNull
+	@Size(min=0, max=32)
+	private String username;
+	
+	private int imageId;
+	
+	public Container() {}
+	
+	public Container(String name, String description, String dockerId) 
+	{
 		this.name = name;
-		this.image = new ArrayList<String>();
-		for (int i = 0; i < image.size(); i++) {
-			this.image.add(image.get(i));
-		}
-		this.settings = new ArrayList<Setting>();
-		for (int i = 0; i < setting.size(); i++) {
-			this.settings.add(setting.get(i));
-		}
-		this.storage = storage;
-		this.code = false;
+		this.description = description;
+		this.dockerId = dockerId;
 	}
-
-	public Container(Container copy) {
-		this.id = copy.id;
-		this.name = copy.name;
-		this.image = new ArrayList<String>();
-		for (int i = 0; i < copy.image.size(); i++) {
-			this.image.add(copy.image.get(i));
-		}
-		this.settings = new ArrayList<Setting>();
-		for (int i = 0; i < copy.settings.size(); i++) {
-			this.settings.add(copy.settings.get(i));
-		}
-		this.storage = copy.storage;
-		this.code = copy.code;
+	
+	public Container(String name, String description, String dockerId, String username, int imageId) 
+	{
+		this.name = name;
+		this.description = description;
+		this.dockerId = dockerId;
+		this.username = username;
+		this.imageId = imageId;
 	}
-
-	public int getId() {
-		return id;
+	
+	public Container(String name, String description, int imageId)
+	{
+		this.name = name;
+		this.description = description;
+		this.imageId = imageId;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
 
-	public List<String> getImage() {
-		return image;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public List<Setting> getSetting() {
-		return settings;
+	public String getDescription() {
+		return description;
 	}
 
-	public boolean isCode() {
-		return code;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setCode(boolean code) {
-		this.code = code;
+	public String getDockerId() {
+		return dockerId;
 	}
 
-	public float getStorage() {
-		return storage;
+	public void setDockerId(String dockerId) {
+		this.dockerId = dockerId;
 	}
 
-	public void setStorage(float storage) {
-		this.storage = storage;
+	public String getUsername() {
+		return username;
 	}
 
-	// Converts a Container to a HashMap
-	public HashMap<String, String> toHash() {
-		HashMap<String, String> obj = new HashMap<String, String>();
-		obj.put("id", getId() + "");
-		obj.put("name", getName());
-		obj.put("imagelen", image.size() + "");
-		for (int i = 0; i < image.size(); i++) {
-			obj.put("image" + i, image.get(i));
-		}
-		obj.put("setlen", settings.size() + "");
-		for (int i = 0; i < settings.size(); i++) {
-			obj.put("setname" + i, settings.get(i).getName());
-			obj.put("lower" + i, settings.get(i).getLower() + "");
-			obj.put("preset" + i, settings.get(i).getPreset() + "");
-			obj.put("upper" + i, settings.get(i).getUpper() + "");
-			obj.put("current" + i, settings.get(i).getCurrent() + "");
-		}
-		obj.put("storage", getStorage() + "");
-		obj.put("code", isCode() + "");
-		return obj;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public int getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
+	}
+
+	/** ======== Data Service Utilities ========== 
+	 * @throws SQLException **/
+	
+//	public static PreparedStatementCreator preparedStatement(final String query, final Container container) throws SQLException
+//	{
+//		return new PreparedStatementCreator() 
+//		{ 
+//			@Override
+//			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException 
+//			{
+//				PreparedStatement ps = connection.prepareStatement(query, new String[] { "ID" } );
+//
+//				ps.setString(1, container.getName());
+//				ps.setString(2, container.getDockerId());
+//				ps.setString(3, container.getDescription());
+//				ps.setString(4, container.getUsername());
+//				
+//				return ps; 
+//			}
+//		};
+//	}
+	
+	public static PreparedStatement preparedStatement(PreparedStatement ps, Container container) throws SQLException
+	{
+		ps.setString(1, container.getName());
+		ps.setString(2, container.getDescription());
+		ps.setString(3, container.getDockerId());
+		ps.setString(4, container.getUsername());
+		ps.setInt(5, container.getImageId());
+		return ps;
+	}
+	
+	public static String getSqlInsertQuery() 
+	{
+		String query = "(c_NAME, "
+				+ "c_DESCRIPTION, "
+				+ "c_DOCKERID, "
+				+ "u_NAME, "
+				+ "i_ID) VALUES "
+				+ "(?,?,?,?,?)";
+		
+		return query;
+	}
+	
+	public static String getSqlUpdateQuery(Container container)
+	{
+		return 
+			  "c_NAME = ?, "
+			+ "c_DESCRIPTION = ?, "
+			+ "c_DOCKERID = ?, "
+			+ "u_NAME = ?, "
+			+ "i_ID = ?";
+	}
+
+	public static Container getSqlRowSet(SqlRowSet srs)
+	{
+		return new Container(
+				srs.getString("c_NAME"),
+				srs.getString("c_DESCRIPTION"),
+				srs.getString("c_DOCKERID"),
+				srs.getString("u_NAME"),
+				srs.getInt("i_ID")
+				);
+	}
+	
+	public static Container getResultSet(ResultSet rs) throws SQLException
+	{
+		return new Container(
+				rs.getString("c_NAME"),
+				rs.getString("c_DESCRIPTION"),
+				rs.getString("c_DOCKERID"),
+				rs.getString("u_NAME"),
+				rs.getInt("i_ID")
+				);
+	}
+	
+	public void setContainerResultSet(ResultSet rs) throws SQLException
+	{
+		this.name = rs.getString("containers.c_NAME");
+		this.description = rs.getString("containers.c_DESCRIPTION");
+		this.dockerId = rs.getString("containers.c_DOCKERID");
+		this.username = rs.getString("containers.u_NAME");
+		this.imageId = rs.getInt("containers.i_ID");
 	}
 }

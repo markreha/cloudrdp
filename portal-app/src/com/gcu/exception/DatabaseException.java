@@ -1,7 +1,8 @@
 package com.gcu.exception;
 
 /**
- * Exception in DAO's for declaring an issue regarding: database connectivity
+ * Exception in DAO's for declaring an issue regarding: 
+ * 		Database Connectivity / SQL Exception
  */
 public class DatabaseException extends RuntimeException
 {

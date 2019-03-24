@@ -65,6 +65,13 @@
 
 .btn-black:hover, .btn-black:focus { background: #696969; }
 
+.btn-purple {
+	color: white;
+	background: #522398;
+}
+
+.btn-purple:hover, .btn-purple:focus { background: #754fad; }
+
 .icon {
     border: none;
     padding: 1em;

@@ -1,24 +1,27 @@
 package com.gcu.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class User 
 {
+	@NotNull
+	@Size(min=0, max=32)
 	private String username;
+	
+	@NotNull
+	@Size(min=0, max=32)
 	private String password;
 
-	public User() 
-	{
-		username = "";
-		password = "";
-	}
+	public User() {}
 
-	public User(String username, String password) {
-		super();
+	public User(String username, String password) 
+	{
 		this.username = username;
 		this.password = password;
 	}
@@ -43,33 +46,27 @@ public class User
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + "]";
 	}
-
+	
+	/** ======== Data Service Utilities ========== **/
+	
+	public static String getSqlInsertQuery() 
+	{
+		return "(u_NAME, u_PASSWORD) VALUES (?, ?)";
+	}
+	
 	public static User getSqlRowSet(SqlRowSet srs)
 	{
 		return new User(
-				srs.getString("USERNAME"),
-				srs.getString("PASSWORD")
+				srs.getString("u_NAME"),
+				srs.getString("u_PASSWORD")
 				);
 	}
-	
-	public static String getSqlParams()
+
+	public static User getResultSet(ResultSet rs) throws SQLException
 	{
-		return 	  "USERNAME, "
-				+ "PASSWORD";
+		return new User(
+				rs.getString("u_NAME"),
+				rs.getString("u_PASSWORD")
+				);
 	}
-	
-	public static String getSqlValues(User user)
-	{
-		return  "'" + user.getUsername() + "', " +
-				"'" + user.getPassword();
-	}
-	
-	public static PreparedStatement prepareStatement(Connection connection, String query, User user) throws SQLException
-	{	
-		PreparedStatement ps = connection.prepareStatement(query, new String[] { "ID" } );
-		ps.setString(1, user.getUsername());
-		ps.setString(2, user.getPassword());
-		return ps;
-	}
-	
 }

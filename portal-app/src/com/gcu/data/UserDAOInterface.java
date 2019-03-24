@@ -2,13 +2,10 @@ package com.gcu.data;
 
 import com.gcu.model.User;
 
-public interface UserDAOInterface 
+public interface UserDAOInterface
 {
-	public boolean createUser(User user);
-
-	public User findUser(User user);
-
-	public boolean updateUser(User user);
-
-	public boolean deleteUser(User user);
+	public User find(final User user);
+	public boolean findIfExists(final User user);
+	public boolean create(final User user);
+	public boolean update(final User user);
 }

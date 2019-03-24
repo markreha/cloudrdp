@@ -13,7 +13,8 @@ img {
   border-radius: 3px;
   -webkit-transition: background .5s, box-shadow .5s; /* Safari */
   transition: background .5s, box-shadow .5s;
-  background: rgba(100,100,100,.1);
+  /* background: rgba(100,100,100,.1); */
+  background: rgb(117, 79, 173, 0.2);
 }
 
 .input:focus-within {

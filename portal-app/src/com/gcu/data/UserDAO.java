@@ -2,20 +2,23 @@ package com.gcu.data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.gcu.exception.DatabaseException;
 import com.gcu.model.User;
 
-public class UserDAO implements UserDAOInterface 
+public class UserDAO implements UserDAOInterface
 {
 	private JdbcTemplate jdbcTemplateObject;
 
@@ -23,6 +26,115 @@ public class UserDAO implements UserDAOInterface
 	public void setDataSource(DataSource dataSource) 
 	{
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
+	}
+
+	/**
+	 * READ method
+	 * validate the user by matching the exact username and password, case sensative
+	 * 
+	 * @param User user
+	 * @return User
+	 * @throws DatabaseException
+	 */
+	@Override
+	public User find(final User user)
+	{
+		try
+		{
+			// READ query to identify the user by username and password
+			final String query = "SELECT * FROM `users` WHERE BINARY `u_NAME` = ? AND BINARY `u_PASSWORD` = ?";
+			
+			// Execute query and get result set
+			List<User> users = jdbcTemplateObject.query(
+					query,
+					new PreparedStatementSetter()
+					{
+						@Override
+						public void setValues(PreparedStatement ps) throws SQLException
+						{
+							ps.setString(1, user.getUsername());
+							ps.setString(2, user.getPassword());
+						}
+					},
+					new RowMapper<User>()
+					{
+						@Override
+						public User mapRow(ResultSet rs, int rowNum) throws SQLException
+						{
+							return User.getResultSet(rs);
+						}
+					}
+					);
+			
+			// Verify the list contains only one, else return null
+			if(users.size() != 1)
+			{
+				return null;
+			}
+			
+			// return the User model
+			return users.get(0);
+		}
+		// Catches SQL / DB Connection Issues.
+		catch(Exception e)
+		{
+			// Throw Custom DB Exception
+			throw new DatabaseException(e);
+		}
+	}
+	
+	/**
+	 * READ method
+	 * check to see if the instance of the user by username exists, case insensitive for all results
+	 * 
+	 * @param User
+	 * @result boolean
+	 * @throws DatabaseException
+	 */
+	@Override
+	public boolean findIfExists(final User user)
+	{
+		try
+		{
+			// READ query to identify the user by username and password.
+			final String query = "SELECT * FROM `users` WHERE UPPER(`u_NAME`) LIKE UPPER(?)";
+		
+			// Execute query and get effected rows
+			List<User> users = jdbcTemplateObject.query(
+					query,
+					new PreparedStatementSetter()
+					{
+						@Override
+						public void setValues(PreparedStatement ps) throws SQLException
+						{
+							ps.setString(1, user.getUsername());
+						}
+					},
+					new RowMapper<User>()
+					{
+						@Override
+						public User mapRow(ResultSet rs, int rowNum) throws SQLException
+						{
+							return User.getResultSet(rs);
+						}
+					}
+					);
+
+			// if the size of the list is anything other than 1, return false;
+			if(users.size() != 1)
+			{
+				return false;
+			}
+			
+			// Return that one instance of the container exists
+			return true;
+		}
+		// Catches SQL / DB Connection Issues.
+		catch(Exception e)
+		{
+			// Throw Custom DB Exception
+			throw new DatabaseException(e);
+		}
 	}
 	
 	/**
@@ -34,22 +146,28 @@ public class UserDAO implements UserDAOInterface
 	 * @throws DatabaseException
 	 */
 	@Override
-	public boolean createUser(final User user) 
+	public boolean create(final User user) 
 	{
 		try 
 		{
 			// INSERT statement with user attributes
-			final String query = "INSERT INTO `user` (" + User.getSqlParams() + ") VALUES (?,?)";
-			// execute query
-			int rows = jdbcTemplateObject.update(new PreparedStatementCreator() 
-			{
-				// initialize a statement
-				public PreparedStatement createPreparedStatement(Connection connection) throws SQLException 
-				{
-					// Setup the statement using User model
-					return User.prepareStatement(connection, query, user);
-				}
-			}, new GeneratedKeyHolder());
+			final String query = "INSERT INTO `users` " + User.getSqlInsertQuery();
+			
+			// execute prepared statement
+			int rows = jdbcTemplateObject.update(
+					new PreparedStatementCreator() 
+					{ 
+						@Override
+						public PreparedStatement createPreparedStatement(Connection connection) throws SQLException 
+						{
+							PreparedStatement ps = connection.prepareStatement(query, new String[] { "ID" } );
+							ps.setString(1, user.getUsername());
+							ps.setString(2, user.getPassword());
+							return ps; 
+						}
+					},
+					new GeneratedKeyHolder()
+					);
 			
 			// If affected rows is one, create was successful
 			if(rows == 1)
@@ -66,54 +184,15 @@ public class UserDAO implements UserDAOInterface
 			throw new DatabaseException(e);
 		}
 	}
-
-	/**
-	 * READ method
-	 * Find a user 
-	 * 
-	 * @param User user
-	 * @return User
-	 * @throws DatabaseException
-	 */
+	
 	@Override
-	public User findUser(User user)
+	public boolean update(User user) 
 	{
-		try
-		{
-			// READ query to identify the user by username and password.
-			String query = "SELECT * FROM `user` WHERE "
-					+" BINARY `USERNAME` = '" + user.getUsername() + "'"
-							+ " AND BINARY `PASSWORD` = '" + user.getPassword() + "'";
-
-			// Execute query and get result set
-			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(query);
-			// Goes to the Last Row of the Results
-			srs.last();
-			// if the Last Row is not the only index, user is not unique or exists
-			if(srs.getRow() != 1)
-			{
-				return null;
-			}
-			// Last Row should still be the First, return the user
-			return User.getSqlRowSet(srs);
-		}
-		// Catches SQL / DB Connection Issues.
-		catch(Exception e)
-		{
-			// Throw Custom DB Exception
-			throw new DatabaseException(e);
-		}
-	}
-
-	@Override
-	public boolean updateUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean deleteUser(User user) {
-		// TODO Auto-generated method stub
+		/*
+		 *  TODO: Update user datatable fields of custom configuration 
+		 *  	variables for Swarm
+		 */
+		
 		return false;
 	}
 }

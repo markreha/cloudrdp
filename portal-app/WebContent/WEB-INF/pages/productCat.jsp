@@ -1,23 +1,32 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
    <div><h2 style="margin: 0.5em 0">Select an Image</h2></div>
-  
+   
+<c:choose>
+	<c:when test="${not empty images}">
+
     <div class="input row">
-      <i style="color:grey"class="fas fa-search icon"></i><input placeholder="Search" type="text" id="filter" autocomplete="off" onkeyup="filterFunction()"/> 
+      <i style="color: #522398"class="fas fa-search icon"></i><input placeholder="Search" type="text" id="filter" autocomplete="off" onkeyup="filterFunction()"/> 
     </div>
 
     <div class="images-container">
       
-      <div id="myBtn" class="column images">
+	<c:forEach items="${images}" var="image">
+	
+      <div onclick="javascript:openModal(this)" class="column images">
       <img src="https://cdn-images-1.medium.com/max/960/1*ZGEUEy_SifxtHG-CSAWsZA.png"/>
-        <span style="margin-top: 10px">Java 8 Tomcat 8.5 For Baby Jesus</span>
-      </div>
-      
-      <div id="myBtn" class="column images">
-      <img src="https://cdn-images-1.medium.com/max/960/1*ZGEUEy_SifxtHG-CSAWsZA.png"/>
-        <span style="margin-top: 10px">Java 8 Tomcat 8.5 For Baby Jesus</span>
+        <span style="margin-top: 10px">Instance: <span id="image-instance">${image.instance}</span></span>
+        <span style="margin-top: 10px">Version: <span id="image-version">${image.version}</span></span>
+        <span style="margin-top: 20px">Tier: <span id="image-tier">${image.tier}</span></span>
+		<span style="margin-top: 10px">CPU: <span id="image-cpu">${image.cpu}</span></span>
+		<span style="margin-top: 10px">RAM: <span id="image-ram">${image.ram}</span></span>
+		<span style="margin-top: 10px">Storage: <span id="image-storage">${image.storage}</span></span>
+		<input id="image-imageId" type="hidden" value="${image.imageId}"/>
       </div>
 
+	</c:forEach>
+	
     </div>
     
           
@@ -41,29 +50,89 @@
   
   <div class="modal-content">
   <div class="modal-header">
-      <span class="close">&times;</span>
+      <span onclick="javascript:closeModal()" class="close">&times;</span>
 	  <h2 class="mgn-10">Container Details</h2>
     </div>
-	<div class="form">
-	  
-	  <div class="column">
-	   <div class="row">
-	   	<div class="pad-20" style="width:150px">Name:</div>
-	    <input minlength="5" type="text" class="input" required="true" value="" maxlength="20" />
-	   </div>
-	  </div>
-	  
-	  <div class="column">
-	   <div class="row">
-	   	<div class="pad-20" style="width:150px">Storage:</div>
-	    <input minlength="5" type="text" class="input" required="true" value="" maxlength="20" />
-	   </div>
-	  </div>
-	  
-	  <input class="btn-green font-bold mgn-col-10" type="submit" value="Create Container" />
-	  
-	</div>
+<form:form class="form" modelAttribute="container" action="${pageContext.request.contextPath}/container/createContainer" method="POST">
+  
+  <div class="column">
+  	<form:errors class="form-error" path="name"/>
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Name:</div>
+    <form:input path="name" minlength="5" placeholder="Container Name" class="input" required="true" type="text" value="" maxlength="20" />
+   </div>
+  </div>
+  
+  <div class="column">
+   <form:errors class="form-error" path="description"/>
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Description:</div>
+    <form:input path="description" placeholder="Description" type="text" class="input" value="" maxlength="200" />
+   </div>
+  </div>
+  
+  <div class="column">
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Instance:</div>
+   	<input id="form-instance" value="" readonly="true"/>
+   </div>
+  </div>
+  
+   <div class="column">
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Version:</div>
+   	<input id="form-version" value="" readonly="true"/>
+   </div>
+  </div>
+  
+  <div class="column">
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Tier:</div>
+   	<input id="form-tier" value="" readonly="true"/>
+   </div>
+  </div>
+  
+   <div class="column">
+   <div class="row">
+   	<div class="pad-20" style="width:150px">CPU:</div>
+   	<input id="form-cpu" value="" readonly="true"/>
+   </div>
+  </div>
+  
+   <div class="column">
+   <div class="row">
+   	<div class="pad-20" style="width:150px">RAM:</div>
+   	<input id="form-ram" value="" readonly="true"/>
+   </div>
+  </div>
+  
+   <div class="column">
+   <div class="row">
+   	<div class="pad-20" style="width:150px">Storage:</div>
+   	<input id="form-storage" value="" readonly="true"/>
+   </div>
+  </div>
+  
+  <div class="column">
+   <form:errors class="form-error" path="imageId"/>
+   <form:input id="form-imageId" path="imageId" type="hidden" readonly="true"/>
+  </div>
+  
+  <input class="btn-purple font-bold mgn-col-10" type="submit" value="Create Container" />
+  
+</form:form>
 	
 	</div>
 </div>
+
+	</c:when>
+	<c:otherwise>
+	
+	<div style="align-items: center;" class="column">
+	
+		${message}
+	
+	</div>
+	</c:otherwise>
+</c:choose>
       

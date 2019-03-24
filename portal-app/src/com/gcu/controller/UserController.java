@@ -1,19 +1,19 @@
 package com.gcu.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gcu.exception.UserErrorException;
 import com.gcu.exception.UserFoundException;
 import com.gcu.exception.UserNotFoundException;
 import com.gcu.model.ErrorMessage;
@@ -21,6 +21,7 @@ import com.gcu.model.User;
 import com.gcu.service.UserServiceInterface;
 
 @Controller
+@SessionAttributes("token")
 @RequestMapping("/user")
 public class UserController 
 {
@@ -50,7 +51,7 @@ public class UserController
 	 */
 	@PostMapping("/loginUser")
 	public ModelAndView loginUser(@Valid @ModelAttribute("user") User user, 
-			BindingResult result, HttpServletRequest request) 
+			BindingResult result, ModelMap model) 
 	{
 		try 
 		{
@@ -59,13 +60,14 @@ public class UserController
 			{
 				return new ModelAndView("login", "user", user);
 			}
+			
 			// Call User Service to find the user 
 			user = userService.findUser(user);
-			// Save the user in the session
-			request.getSession().setAttribute("token", user);
 			
-			// Get all containers related to the user
-			return new ModelAndView("productCat", "user", user);
+			// Save the user in the session
+			model.addAttribute("token", user);
+			
+			return new ModelAndView("redirect:/container/catalog");
 		} 
 		// Catches UserNotFoundException and return to login view
 		catch (UserNotFoundException e) 
@@ -97,7 +99,7 @@ public class UserController
 	 */
 	@PostMapping("/registerUser")
 	public ModelAndView registerUser(@Valid @ModelAttribute("user") User user, 
-			BindingResult result, HttpServletRequest request) 
+			BindingResult result, ModelMap modal) 
 	{
 		try 
 		{
@@ -108,23 +110,18 @@ public class UserController
 			}
 			// Call the User Service to create the user
 			userService.createUser(user);
+			
 			// Save the user in the session
-			request.getSession().setAttribute("token", user);
-			// Navigate user to the productCat
-			return new ModelAndView("productCat", "user", user);
+			modal.addAttribute("token", user);
+			
+			// Redirect the user to the catalog
+			return new ModelAndView("redirect:/container/catalog");
 		} 
 		// Catches the UserFoundException for invalid request
 		catch (UserFoundException e) 
 		{
 			String message = "That username has already been registered. Please pick a new one a try again.";
 			ErrorMessage error = new ErrorMessage("Registration failed", message, "user/register");
-			return new ModelAndView("error", "error", error);
-		}
-		// Catches the UserErrorException for Server error
-		catch (UserErrorException e)
-		{
-			String message = "There was an error registering your account. Please try again.";
-			ErrorMessage error = new ErrorMessage("Server error", message, "user/register");
 			return new ModelAndView("error", "error", error);
 		}
 	}
@@ -136,10 +133,16 @@ public class UserController
 	 * @return String root view
 	 */
 	@GetMapping("/logout")
-	public String logout(HttpServletRequest request) 
+	public String logout(ModelMap model, SessionStatus status) 
 	{
-		// Unbind all the mapping, destroying the session
-		request.getSession().invalidate();
+		// Check if a session is active
+		if(model.containsAttribute("token"))
+		{
+			// Unbind all the mapping, destroying the session
+			status.setComplete();
+			model.remove("token");
+		}
+				
 		// redirect to the root of the app
 		return "redirect:/";
 	}
