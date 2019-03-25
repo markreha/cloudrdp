@@ -32,6 +32,15 @@ public interface ContainerServiceInterface
 	public List<Container> getAllContainers(User user) throws ContainerNotFoundException;
 	
 	/**
+	 * Add the docker id to a container
+	 * 
+	 * @param container
+	 * @param docker
+	 * @result boolean - if the sql query is successful
+	 */
+	public boolean update(Container container, String docker);
+	
+	/**
 	 * Delete the container from the Swarm and database
 	 * 
 	 * @param Container - selected by user

@@ -105,6 +105,11 @@ public class ContainerService implements ContainerServiceInterface
 		return containers;
 	}
 
+	@Override
+	public boolean update(Container container, String docker) {
+		return containerDAO.update(container, docker);
+	}
+
 	/**
 	 * Delete the container from the Swarm and database
 	 * 

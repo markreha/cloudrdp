@@ -186,6 +186,40 @@ public class ContainerDAO implements ContainerDAOInterface
 	}
 	
 	/**
+	 * UPDATE method
+	 * Updates the container's docker identification
+	 * 
+	 * @param Container container
+	 * @param String docker
+	 * @return boolean
+	 * @throws DatabaseException
+	 */
+	public boolean update(Container container, String docker) {
+		try
+		{
+			String sql = "UPDATE RDP.CONTAINERS SET c_DOCKERID u_NAME = ? AND `i_ID` = ?";
+			
+			// Add the docker name of the container created
+			int rows = jdbcTemplateObject.update(sql, docker, container.getUsername(), container.getImageId());
+			
+			// if the size of the list is anything other than 1, return false;
+			if(rows == 0)
+			{
+				return false;
+			}
+			
+			// Return that one instance of the container exists
+			return true;
+		}
+		// Catches SQL / DB Connection Issues.
+		catch(Exception e)
+		{
+			// Throw Custom DB Exception
+			throw new DatabaseException(e);
+		}
+	}
+	
+	/**
 	 * Need this one
 	 */
 	@Override

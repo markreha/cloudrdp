@@ -12,5 +12,7 @@ public interface ContainerDAOInterface
 	
 	public boolean create(Container container);
 	
+	public boolean update(Container container, String docker);
+	
 	public boolean delete(Container container);
 }
