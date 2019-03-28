@@ -8,17 +8,17 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class Image
 {
-	private int imageId;
+	protected int imageId;
 	private String instance;
 	private String version;
 	private String tier;
-	private BigDecimal cpu;
+	private float cpu;
 	private BigDecimal ram;
 	private int storage;
 	
 	public Image() {}
 	
-	public Image(int imageId, String instance, String version, String tier, BigDecimal cpu, BigDecimal ram, int storage)
+	public Image(int imageId, String instance, String version, String tier, float cpu, BigDecimal ram, int storage)
 	{
 		this.imageId = imageId;
 		this.instance = instance;
@@ -65,11 +65,11 @@ public class Image
 		this.tier = tier;
 	}
 
-	public BigDecimal getCpu() {
+	public float getCpu() {
 		return cpu;
 	}
 
-	public void setCpu(BigDecimal cpu) {
+	public void setCpu(float cpu) {
 		this.cpu = cpu;
 	}
 
@@ -134,7 +134,7 @@ public class Image
 				srs.getString("i_INSTANCE"),
 				srs.getString("i_VERSION"),
 				srs.getString("i_TIER"),
-				srs.getBigDecimal("i_CPU"),
+				srs.getFloat("i_CPU"),
 				srs.getBigDecimal("i_RAM"),
 				srs.getInt("i_STORAGE")
 				);
@@ -147,7 +147,7 @@ public class Image
 				rs.getString("i_INSTANCE"),
 				rs.getString("i_VERSION"),
 				rs.getString("i_TIER"),
-				rs.getBigDecimal("i_CPU"),
+				rs.getFloat("i_CPU"),
 				rs.getBigDecimal("i_RAM"),
 				rs.getInt("i_STORAGE")
 				);
@@ -159,7 +159,7 @@ public class Image
 		this.instance = rs.getString("images.i_INSTANCE");
 		this.version = rs.getString("images.i_VERSION");
 		this.tier = rs.getString("images.i_TIER");
-		this.cpu = rs.getBigDecimal("images.i_CPU");
+		this.cpu = rs.getFloat("images.i_CPU");
 		this.ram = rs.getBigDecimal("images.i_RAM");
 		this.storage = rs.getInt("images.i_STORAGE");
 	}

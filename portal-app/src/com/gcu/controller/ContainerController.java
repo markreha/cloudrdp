@@ -37,12 +37,7 @@ public class ContainerController
 	@Autowired
 	private ImageServiceInterface imageService;
 	
-	static String piAddress = "tcp://10.0.1.153:2375";				// IP Address to the Docker Engine (running on the Raspberry Pi)
-	static String registryUrl = "https://hub.docker.com";			// Use the Docker Hub Registry
-	static String registryEmail = "mark.reha@gcu.edu";				// Docker Registry User Email Address
-	static String registryUsername = "mark.reha@gcu.edu";			// Docker Registry Username
-	static String registryPassword = "Starman1";					// Docker Registry Password
-	static DockerApi api = null;									// Instance of the GCU Docker API Wrapper class
+	
 
 	@GetMapping("/catalog")
 	public ModelAndView productCat(ModelMap model) 
@@ -75,23 +70,6 @@ public class ContainerController
 			if(validate.hasErrors())
 			{
 				return new ModelAndView("productCat");
-			}
-			DockerApi api = new DockerApi(piAddress, registryUrl, registryEmail, registryUsername, registryPassword);
-			Image image = imageService.findImageById(container.getImageId());
-			String name = container.getName();
-			int replicas = 1;
-			float storage = container.getStorage();
-			CreateSwarmServiceInfo info = new CreateSwarmServiceInfo(image.getInstance(), container.getName(), container.getCpu(), 
-					container.getStorage(), replicas, 80, 1000);
-			String id = api.createSwarmService(info);
-			if(id != null) {
-				// Log success
-				System.out.println("=======> Nginx Swarm created successfully with an ID of " + id + ".");
-				// Save ID
-				containerService.update(container, id);
-			}
-			else {
-				System.out.println("=======> Nginx Swarm creation failed.");
 			}
 			
 			// Call the container service to create the container for the user

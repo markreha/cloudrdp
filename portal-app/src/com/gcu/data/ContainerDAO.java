@@ -197,7 +197,7 @@ public class ContainerDAO implements ContainerDAOInterface
 	public boolean update(Container container, String docker) {
 		try
 		{
-			String sql = "UPDATE RDP.CONTAINERS SET c_DOCKERID u_NAME = ? AND `i_ID` = ?";
+			String sql = "UPDATE RDP.CONTAINERS SET c_DOCKERID = ? WHERE u_NAME = ? AND `i_ID` = ?";
 			
 			// Add the docker name of the container created
 			int rows = jdbcTemplateObject.update(sql, docker, container.getUsername(), container.getImageId());
