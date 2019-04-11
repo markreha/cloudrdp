@@ -52,13 +52,52 @@ function closeModal()
 	let modal = document.getElementById('myModal');
 	modal.style.display = "none";
 }
+//
+//
+//
+//function headerMenu() {
+//  let navbar = document.getElementById("myTopnav");
+//  if (navbar.className === "topnav") {
+//    navbar.className += " responsive";
+//  } else {
+//    navbar.className = "topnav";
+//  }
+//}
 
-function headerMenu() {
+function toggleMenuTopic(topic)
+{
+	let children = topic.querySelector(".dropdown-content");
+	
+	if(getComputedStyle(children, null).display === "none")
+	{
+		children.style.display = "block";
+	}
+	else 
+	{
+		children.style="";
+	}
+}
+
+function toggleResponseMenu() 
+{
   let navbar = document.getElementById("myTopnav");
-  if (navbar.className === "topnav") {
+  
+  if (navbar.className === "topnav") 
+  {
     navbar.className += " responsive";
   } else {
     navbar.className = "topnav";
+  }
+  
+  let dropdown = navbar.querySelectorAll(".dropdown-content");
+  
+  // For multiple dropdowns
+  for(let i=0; i < dropdown.length; i++)
+  {
+	  if(getComputedStyle(dropdown[i], null).display === "block")
+	{
+		  dropdown[i].style = "";
+		}
   }
 }
 

@@ -6,7 +6,7 @@
 
 	<c:if test="${not empty token}">
 		<!-- For Dropdown functionality -->
-		<div class="dropdown">
+		<div onclick="toggleMenuTopic(this)" class="dropdown">
 			<button class="dropbtn">
 				<span>Docker</span> <i class="fa fa-caret-down"></i>
 			</button>
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 
-		<div class="dropdown">
+		<div onclick="toggleMenuTopic(this)" class="dropdown">
 			<button class="dropbtn">
 				<span>Swarm</span> <i class="fa fa-caret-down"></i>
 			</button>
@@ -54,6 +54,6 @@
 
 	<a class=topnav-right href="#aboutus"><span>About Us</span></a> <a
 		href="javascript:void(0);" style="font-size: 19.6px;"
-		class="topnav-icon" onclick="headerMenu()">&#9776;</a>
+		class="topnav-icon" onclick="toggleResponseMenu()">&#9776;</a>
 </div>
 
