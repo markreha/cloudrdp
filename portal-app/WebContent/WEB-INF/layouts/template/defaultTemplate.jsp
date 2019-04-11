@@ -63,6 +63,15 @@
 </head>
 
 <body>
+
+<div>
+<img class="logo"
+		src="https://www.gcu.edu/sites/default/files/media/Documents/brand/logos/jpeg/GCU-267.jpg"/>
+
+<img class="logo" style="float:right; padding: 10px;" 
+	src="https://mk0teamcolorcodtgc6i.kinstacdn.com/wp-content/uploads/2018/04/grand_canyon_university.jpg"/>
+
+</div> 
 	<div class="container">
 		<!-- Header -->
 		<div class="header">

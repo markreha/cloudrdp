@@ -1,7 +1,5 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
-<img class="logo"
-		src="https://www.gcu.edu/sites/default/files/media/Documents/brand/logos/jpeg/GCU-267.jpg" />
-	 
+
 <div class="topnav" id="myTopnav">
 	<a href="${pageContext.request.contextPath}/"><span>Cloud
 			RDP</span></a>

@@ -71,3 +71,17 @@
   background-color: #5cb85c;
   color: white;
 }
+
+@media all and (max-width: 450px)
+{
+	.modal
+	{
+	padding-top: 0;
+	}
+	
+	.modal-content
+	{
+		margin: 0;
+		width: unset;
+	}
+}

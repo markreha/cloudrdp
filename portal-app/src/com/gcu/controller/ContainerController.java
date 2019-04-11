@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gcu.edu.dockerapi.CreateSwarmServiceInfo;
-import com.gcu.edu.dockerapi.DockerApi;
 import com.gcu.exception.ContainerFoundException;
 import com.gcu.exception.ContainerNotFoundException;
 import com.gcu.exception.ImageNotFoundException;
 import com.gcu.model.Container;
-import com.gcu.model.Image;
 import com.gcu.model.User;
 import com.gcu.service.ContainerServiceInterface;
 import com.gcu.service.ImageServiceInterface;

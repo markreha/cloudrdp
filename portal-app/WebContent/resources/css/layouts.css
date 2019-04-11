@@ -11,8 +11,8 @@ html, body {
 }
 
 body {
-  max-width: 800px;
-  margin: auto;
+  /* max-width: 800px;
+  margin: auto; */
   font-family: 'Raleway', sans-serif;
   
 /*   background: orange; */
@@ -73,6 +73,9 @@ input:-webkit-autofill:active  {
   		
   	grid-row-gap: 0;
   	grid-column-gap: 0;
+  	
+  	margin: auto;
+    /* max-width: 800px !important; */
 }
 
 
