@@ -8,6 +8,7 @@ import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.api.model.Service;
 import com.github.dockerjava.api.model.SwarmNode;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ import java.util.Scanner;
 public class Play
 {
 //	static String piAddress = "tcp://172.24.19.223:2375";			// IP Address to the Docker Engine (running on the Raspberry Pi)
-	static String piAddress = "tcp://10.0.1.153:2375";				// IP Address to the Docker Engine (running on the Raspberry Pi)
+	static String piAddress = "tcp://172.24.102.171:2375";				// IP Address to the Docker Engine (running on the Raspberry Pi)
 	static String registryUrl = "https://hub.docker.com";			// Use the Docker Hub Registry
 	static String registryEmail = "mark.reha@gcu.edu";				// Docker Registry User Email Address
 	static String registryUsername = "mark.reha@gcu.edu";			// Docker Registry Username
@@ -114,12 +115,21 @@ public class Play
 	{
 		// Get all the Images Info and display
 		List<Image> images = api.getAllImagessInfo(false);
+
 		if (images.size() == 0)
 		{
-			System.out.println("=======> No Imges available");
+			System.out.println("=======> No Images available");
 			return false;
 		}
-		images.forEach(image -> System.out.println(String.format("=======> Image with an ID of %s with a Name of %s and size %.1fMb",	image.getId(), image.getRepoTags()[0], image.getSize().floatValue() / 1000000f)));
+		
+		for(Image image : images){
+			if(image.getRepoTags() != null) {
+				System.out.println(String.format("=======> Image with an ID of %s with a Name of %s and size %.1fMb", image.getId(), image.getRepoTags()[0], image.getSize().floatValue() / 1000000f));
+			} else {
+				System.out.println(String.format("=======> Found image with an ID of %s and a size of %.1fMb however the image tags are not properly listed", image.getId(), image.getSize().floatValue()/1000000f));
+			}
+		}
+		
 		return true;
 	}
 
