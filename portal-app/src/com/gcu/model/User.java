@@ -1,12 +1,7 @@
 package com.gcu.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 public class User 
 {
@@ -47,26 +42,4 @@ public class User
 		return "User [username=" + username + ", password=" + password + "]";
 	}
 	
-	/** ======== Data Service Utilities ========== **/
-	
-	public static String getSqlInsertQuery() 
-	{
-		return "(u_NAME, u_PASSWORD) VALUES (?, ?)";
-	}
-	
-	public static User getSqlRowSet(SqlRowSet srs)
-	{
-		return new User(
-				srs.getString("u_NAME"),
-				srs.getString("u_PASSWORD")
-				);
-	}
-
-	public static User getResultSet(ResultSet rs) throws SQLException
-	{
-		return new User(
-				rs.getString("u_NAME"),
-				rs.getString("u_PASSWORD")
-				);
-	}
 }
