@@ -17,6 +17,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import com.gcu.exception.DatabaseException;
 import com.gcu.model.User;
+import com.gcu.utility.SqlFactory;
 
 public class UserDAO implements UserDAOInterface
 {
@@ -61,7 +62,7 @@ public class UserDAO implements UserDAOInterface
 						@Override
 						public User mapRow(ResultSet rs, int rowNum) throws SQLException
 						{
-							return User.getResultSet(rs);
+							return SqlFactory.getResultSet(rs, User.class);
 						}
 					}
 					);
@@ -115,7 +116,7 @@ public class UserDAO implements UserDAOInterface
 						@Override
 						public User mapRow(ResultSet rs, int rowNum) throws SQLException
 						{
-							return User.getResultSet(rs);
+							return SqlFactory.getResultSet(rs, User.class);
 						}
 					}
 					);
@@ -151,7 +152,7 @@ public class UserDAO implements UserDAOInterface
 		try 
 		{
 			// INSERT statement with user attributes
-			final String query = "INSERT INTO `users` " + User.getSqlInsertQuery();
+			final String query = SqlFactory.getSqlInsertQuery(User.class);
 			
 			// execute prepared statement
 			int rows = jdbcTemplateObject.update(

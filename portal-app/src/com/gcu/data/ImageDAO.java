@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.gcu.exception.DatabaseException;
 import com.gcu.model.Image;
+import com.gcu.utility.SqlFactory;
 
 public class ImageDAO implements ImageDAOInterface
 {
@@ -45,7 +46,7 @@ public class ImageDAO implements ImageDAOInterface
 			// Iterate through the result set and add to the list
 			while(srs.next())
 			{
-				images.add(Image.getSqlRowSet(srs));
+				images.add(SqlFactory.getSqlRowSet(srs, Image.class));
 			}
 			
 			// Last Row should still be the First, return the user
@@ -80,7 +81,7 @@ public class ImageDAO implements ImageDAOInterface
 			}
 			
 			// Last Row should still be the First, return the user
-			return Image.getSqlRowSet(srs);
+			return SqlFactory.getSqlRowSet(srs, Image.class);
 		}
 		// Catches SQL / DB Connection Issues.
 		catch(Exception e)

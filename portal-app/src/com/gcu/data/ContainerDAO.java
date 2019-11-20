@@ -17,6 +17,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import com.gcu.exception.DatabaseException;
 import com.gcu.model.Container;
+import com.gcu.utility.SqlFactory;
 
 public class ContainerDAO implements ContainerDAOInterface
 {
@@ -60,8 +61,21 @@ public class ContainerDAO implements ContainerDAOInterface
 						{
 							Container container = new Container();
 							
-							container.setContainerResultSet(rs);
-							container.setImageResultSet(rs);
+							// Setting Container Values
+							container.setName(rs.getString("containers.c_NAME"));
+							container.setDescription(rs.getString("containers.c_DESCRIPTION"));
+							container.setDockerId(rs.getString("containers.c_DOCKERID"));
+							container.setUsername(rs.getString("containers.u_NAME"));
+							container.setImageId(rs.getInt("containers.i_ID"));
+							
+							// Setting Image Values
+							container.setImageId(rs.getInt("images.i_ID"));
+							container.setInstance(rs.getString("images.i_INSTANCE"));
+							container.setVersion(rs.getString("images.i_VERSION"));
+							container.setTier(rs.getString("images.i_TIER"));
+							container.setCpu(rs.getFloat("images.i_CPU"));
+							container.setRam(rs.getBigDecimal("images.i_RAM"));
+							container.setStorage(rs.getInt("images.i_STORAGE"));
 							
 							return container;
 						}
@@ -110,7 +124,7 @@ public class ContainerDAO implements ContainerDAOInterface
 						@Override
 						public Container mapRow(ResultSet rs, int rowNum) throws SQLException
 						{
-							return Container.getResultSet(rs);
+							return SqlFactory.getResultSet(rs, Container.class);
 						}
 					}
 					);
@@ -146,7 +160,7 @@ public class ContainerDAO implements ContainerDAOInterface
 		try 
 		{
 			// INSERT statement with container attributes
-			final String query = "INSERT INTO `containers` " + Container.getSqlInsertQuery();
+			final String query = SqlFactory.getSqlInsertQuery(Container.class);
 			
 			// execute prepared statement
 			int rows = jdbcTemplateObject.update(
@@ -197,7 +211,7 @@ public class ContainerDAO implements ContainerDAOInterface
 	public boolean update(Container container, String docker) {
 		try
 		{
-			String sql = "UPDATE RDP.CONTAINERS SET c_DOCKERID = ? WHERE u_NAME = ? AND `i_ID` = ?";
+			String sql = SqlFactory.getSqlUpdateQuery(Container.class);
 			
 			// Add the docker name of the container created
 			int rows = jdbcTemplateObject.update(sql, docker, container.getUsername(), container.getImageId());
