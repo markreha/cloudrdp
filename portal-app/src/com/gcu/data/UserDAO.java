@@ -43,7 +43,7 @@ public class UserDAO implements UserDAOInterface
 		try
 		{
 			// READ query to identify the user by username and password
-			final String query = "SELECT * FROM `users` WHERE BINARY `u_NAME` = ? AND BINARY `u_PASSWORD` = ?";
+			final String query = SqlFactory.findQuery(User.class);
 			
 			// Execute query and get result set
 			List<User> users = jdbcTemplateObject.query(
@@ -98,7 +98,7 @@ public class UserDAO implements UserDAOInterface
 		try
 		{
 			// READ query to identify the user by username and password.
-			final String query = "SELECT * FROM `users` WHERE UPPER(`u_NAME`) LIKE UPPER(?)";
+			final String query = SqlFactory.findIfExistsQuery(User.class);
 		
 			// Execute query and get effected rows
 			List<User> users = jdbcTemplateObject.query(

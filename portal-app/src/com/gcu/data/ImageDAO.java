@@ -38,7 +38,7 @@ public class ImageDAO implements ImageDAOInterface
 			List<Image> images = new ArrayList<Image>();
 			
 			// READ query to identify the user by username and password.
-			String query = "SELECT * FROM `images` LIMIT 1000";
+			String query = SqlFactory.findAllQuery(Image.class);
 
 			// Execute query and get result set
 			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(query);
@@ -66,10 +66,10 @@ public class ImageDAO implements ImageDAOInterface
 		try
 		{
 			// READ query to identify the user by username and password.
-			String query = "SELECT * FROM `images` WHERE `i_ID` = " + imageId;
+			String query = SqlFactory.findQuery(Image.class);
 
 			// Execute query and get result set
-			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(query);
+			SqlRowSet srs = jdbcTemplateObject.queryForRowSet(query, imageId);
 			
 			// Move to the last row
 			srs.last();

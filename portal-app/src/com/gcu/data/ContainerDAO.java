@@ -39,9 +39,7 @@ public class ContainerDAO implements ContainerDAOInterface
 		try
 		{
 			// READ query to identify the container by username and password.
-			final String query = "SELECT * FROM `containers` " + 
-					"LEFT JOIN `images` ON `containers`.`i_ID` = `images`.`i_ID` " + 
-					"WHERE `containers`.`u_NAME` = (?)";
+			final String query = SqlFactory.findQuery(Container.class);
 
 			// Execute query and get result set
 			List<Container> containers = jdbcTemplateObject.query(
@@ -71,7 +69,9 @@ public class ContainerDAO implements ContainerDAOInterface
 							// Setting Image Values
 							container.setImageId(rs.getInt("images.i_ID"));
 							container.setInstance(rs.getString("images.i_INSTANCE"));
+							container.setName(rs.getString("images.i_NAME"));
 							container.setVersion(rs.getString("images.i_VERSION"));
+							container.setPort(rs.getInt("images.i_PORT"));
 							container.setTier(rs.getString("images.i_TIER"));
 							container.setCpu(rs.getFloat("images.i_CPU"));
 							container.setRam(rs.getBigDecimal("images.i_RAM"));
@@ -105,7 +105,7 @@ public class ContainerDAO implements ContainerDAOInterface
 		try
 		{
 			// READ query to identify the container by username and password.
-			final String query = "SELECT * FROM `containers` WHERE `u_NAME` = ? AND `i_ID` = ?";
+			final String query = SqlFactory.findIfExistsQuery(Container.class);
 
 			// Execute query and get result set
 			List<Container> containers = jdbcTemplateObject.query(
