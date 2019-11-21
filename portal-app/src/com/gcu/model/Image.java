@@ -6,7 +6,9 @@ public class Image
 {
 	protected int imageId;
 	private String instance;
+	private String name;
 	private String version;
+	private int port;
 	private String tier;
 	private float cpu;
 	private BigDecimal ram;
@@ -14,11 +16,14 @@ public class Image
 	
 	public Image() {}
 	
-	public Image(int imageId, String instance, String version, String tier, float cpu, BigDecimal ram, int storage)
+	public Image(int imageId, String instance, String name, String version, int port, String tier, 
+			float cpu, BigDecimal ram, int storage) 
 	{
 		this.imageId = imageId;
 		this.instance = instance;
+		this.name = name;
 		this.version = version;
+		this.port = port;
 		this.tier = tier;
 		
 		// Might have to constrain db defined decimal cap
@@ -44,6 +49,14 @@ public class Image
 	public void setInstance(String instance) {
 		this.instance = instance;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getVersion() {
 		return version;
@@ -51,6 +64,14 @@ public class Image
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+	
+	public int getPort() {
+		return port;
+	}
+	
+	public void setPort(int port) {
+		this.port = port;
 	}
 	
 	public String getTier() {
@@ -87,8 +108,8 @@ public class Image
 
 	@Override
 	public String toString() {
-		return "Image [instance=" + instance + ", version=" + version + ", tier=" + tier + ", cpu=" + cpu + ", ram=" + ram
-				+ ", storage=" + storage + "]";
+		return "Image [instance=" + instance + ", name=" + name + ", version=" + version + ", port=" + port + 
+				", tier=" + tier + ", cpu=" + cpu + ", ram=" + ram + ", storage=" + storage + "]";
 	}
 
 }
