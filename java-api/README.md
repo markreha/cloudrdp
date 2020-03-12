@@ -4,6 +4,8 @@ Research Question: Can we design and build a fully functioning Private Cloud Pla
 
 This repository contains the code to support the Cloud Java Docker API.
 
+This project should be build with standard Java Eclipse using Java 8 and exported as a JAR file.
+
 Java Docker API
 --------
 The Cloud Portal Application communicates to the Cloud via using a Java Docker API.
