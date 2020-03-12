@@ -5,20 +5,19 @@ Research Question: Can we design and build a fully functioning Private Cloud Pla
 This repository contains the code to support the Cloud Portal Application.
 
 The following steps can be used to import and build the Portal Application using EclipseEE and Tomcat 8.5.
-Start EclipseEE
-Select the File Import->Projects from Git (with smart import) menu options
-Click Next
-Select Clone URI
-In the URI enter https://github.com/markreha/cloudrdp 
-Click Next 
-Only check the master option
-Browse to the path where you want the local GIT repository to reside
-Click Next
-Only check the cloudrdp/portal-app project
-Click Finish
+1) Start EclipseEE
+2) Select the File Import->Projects from Git (with smart import) menu options
+3) Click Next
+4) Select Clone URI
+5) In the URI enter https://github.com/markreha/cloudrdp 
+6) Click Next 
+7) Only check the master option
+8) Browse to the path where you want the local GIT repository to reside
+9) Click Next
+10) Only check the cloudrdp/portal-app project
+11) Click Finish
 
 A new Dynamic Web Application Project named portal-app should now be shown in your EclipseEE workspace.
-
 Make sure you add a Tomcat 8.5 Server to EclipseEE.
 
 =================================
