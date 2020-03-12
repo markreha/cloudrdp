@@ -4,7 +4,7 @@ Research Question: Can we design and build a fully functioning Private Cloud Pla
 
 This repository contains the code to support the Cloud Portal Application.
 
-The following steps can be used to import and build the Portal Application using EclipseEE and Tomcat 8.5.
+The following steps can be used to import and build the Portal Application using EclipseEE, Java 8, and deployed onto Tomcat 8.5 server.
 1) Start EclipseEE
 2) Select the File Import->Projects from Git (with smart import) menu options
 3) Click Next
